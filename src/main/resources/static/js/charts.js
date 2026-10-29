@@ -7,6 +7,19 @@ let simulationChartInstance = null;
 let loanDistributionChartInstance = null;
 
 const chartEngine = {
+  getThemeColors() {
+    const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+    return {
+      textColor: isLight ? '#475569' : '#94a3b8',
+      gridColor: isLight ? 'rgba(0, 0, 0, 0.06)' : 'rgba(255, 255, 255, 0.05)',
+      tooltipBg: isLight ? '#ffffff' : '#1e293b',
+      tooltipTitle: isLight ? '#0f172a' : '#f8fafc',
+      tooltipBody: isLight ? '#334155' : '#cbd5e1',
+      tooltipBorder: isLight ? 'rgba(0, 0, 0, 0.12)' : 'rgba(255, 255, 255, 0.15)',
+      doughnutBorder: isLight ? '#ffffff' : '#111827'
+    };
+  },
+
   /**
    * Render or update the Dashboard Risk Overview Chart
    */
@@ -14,6 +27,7 @@ const chartEngine = {
     const ctx = document.getElementById(canvasId);
     if (!ctx || !window.Chart) return;
 
+    const theme = this.getThemeColors();
     const labels = periods.map(p => p.label);
     const incomeData = periods.map(p => p.expectedIncome);
     const emiData = periods.map(p => p.totalEmiDue);
@@ -69,15 +83,15 @@ const chartEngine = {
           legend: {
             position: 'top',
             labels: {
-              color: '#94a3b8',
+              color: theme.textColor,
               font: { family: 'Inter', size: 12 }
             }
           },
           tooltip: {
-            backgroundColor: '#1e293b',
-            titleColor: '#f8fafc',
-            bodyColor: '#cbd5e1',
-            borderColor: 'rgba(255, 255, 255, 0.15)',
+            backgroundColor: theme.tooltipBg,
+            titleColor: theme.tooltipTitle,
+            bodyColor: theme.tooltipBody,
+            borderColor: theme.tooltipBorder,
             borderWidth: 1,
             padding: 12,
             callbacks: {
@@ -95,13 +109,13 @@ const chartEngine = {
         },
         scales: {
           x: {
-            grid: { color: 'rgba(255, 255, 255, 0.05)' },
-            ticks: { color: '#94a3b8', font: { family: 'Inter', size: 11 } }
+            grid: { color: theme.gridColor },
+            ticks: { color: theme.textColor, font: { family: 'Inter', size: 11 } }
           },
           y: {
-            grid: { color: 'rgba(255, 255, 255, 0.05)' },
+            grid: { color: theme.gridColor },
             ticks: {
-              color: '#94a3b8',
+              color: theme.textColor,
               font: { family: 'Inter', size: 11 },
               callback: val => '₹' + val.toLocaleString()
             }
@@ -118,6 +132,7 @@ const chartEngine = {
     const ctx = document.getElementById(canvasId);
     if (!ctx || !window.Chart || !simResult) return;
 
+    const theme = this.getThemeColors();
     const beforePeriods = simResult.beforePeriods || [];
     const afterPeriods = simResult.afterPeriods || [];
     const labels = beforePeriods.map(p => p.label);
@@ -170,26 +185,26 @@ const chartEngine = {
         plugins: {
           legend: {
             position: 'top',
-            labels: { color: '#94a3b8', font: { family: 'Inter', size: 12 } }
+            labels: { color: theme.textColor, font: { family: 'Inter', size: 12 } }
           },
           tooltip: {
-            backgroundColor: '#1e293b',
-            titleColor: '#f8fafc',
-            bodyColor: '#cbd5e1',
-            borderColor: 'rgba(255, 255, 255, 0.15)',
+            backgroundColor: theme.tooltipBg,
+            titleColor: theme.tooltipTitle,
+            bodyColor: theme.tooltipBody,
+            borderColor: theme.tooltipBorder,
             borderWidth: 1,
             padding: 12
           }
         },
         scales: {
           x: {
-            grid: { color: 'rgba(255, 255, 255, 0.05)' },
-            ticks: { color: '#94a3b8', font: { family: 'Inter', size: 11 } }
+            grid: { color: theme.gridColor },
+            ticks: { color: theme.textColor, font: { family: 'Inter', size: 11 } }
           },
           y: {
-            grid: { color: 'rgba(255, 255, 255, 0.05)' },
+            grid: { color: theme.gridColor },
             ticks: {
-              color: '#94a3b8',
+              color: theme.textColor,
               font: { family: 'Inter', size: 11 },
               callback: val => '₹' + val.toLocaleString()
             }
@@ -206,6 +221,7 @@ const chartEngine = {
     const ctx = document.getElementById(canvasId);
     if (!ctx || !window.Chart || !loans || loans.length === 0) return;
 
+    const theme = this.getThemeColors();
     const typeTotals = {};
     loans.forEach(loan => {
       const typeName = loan.loanType || 'OTHER';
@@ -230,7 +246,7 @@ const chartEngine = {
           data: data,
           backgroundColor: colors.slice(0, labels.length),
           borderWidth: 2,
-          borderColor: '#111827'
+          borderColor: theme.doughnutBorder
         }]
       },
       options: {
@@ -239,7 +255,7 @@ const chartEngine = {
         plugins: {
           legend: {
             position: 'right',
-            labels: { color: '#94a3b8', font: { family: 'Inter', size: 11 } }
+            labels: { color: theme.textColor, font: { family: 'Inter', size: 11 } }
           }
         },
         cutout: '65%'

@@ -1,10 +1,14 @@
 # EMI Stacking Risk Detector 🛡️
 
 [![Java CI with Maven](https://github.com/vinodhini2312/EMI-Stacking-Risk-Detector/actions/workflows/ci.yml/badge.svg)](https://github.com/vinodhini2312/EMI-Stacking-Risk-Detector/actions/workflows/ci.yml)
+[![Deploy GitHub Pages](https://github.com/vinodhini2312/EMI-Stacking-Risk-Detector/actions/workflows/pages.yml/badge.svg)](https://github.com/vinodhini2312/EMI-Stacking-Risk-Detector/actions/workflows/pages.yml)
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-GitHub%20Pages-blue.svg?style=flat&logo=github)](https://vinodhini2312.github.io/EMI-Stacking-Risk-Detector/)
 [![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.2.5-brightgreen.svg)](https://spring.io/projects/spring-boot)
 [![Java](https://img.shields.io/badge/Java-17%20%7C%2022-orange.svg)](https://www.oracle.com/java/)
 [![SQL Database](https://img.shields.io/badge/Database-PostgreSQL%20%7C%20H2-blue.svg)](https://www.postgresql.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+
+> 🚀 **Live Interactive Demo**: [https://vinodhini2312.github.io/EMI-Stacking-Risk-Detector/](https://vinodhini2312.github.io/EMI-Stacking-Risk-Detector/)
 
 An intelligent, full-stack fintech web application and risk-detection engine built to identify **multi-loan EMI stacking collisions**, forecast cashflow deficits across upcoming pay cycles, and evaluate new loans or Buy-Now-Pay-Later (BNPL) purchases using a predictive **What-If EMI Simulator** before signing loan agreements.
 

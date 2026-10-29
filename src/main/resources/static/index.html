@@ -16,6 +16,15 @@
   
   <!-- App Styles -->
   <link rel="stylesheet" href="css/style.css">
+  
+  <!-- Prevent theme flash -->
+  <script>
+    (function() {
+      const savedTheme = localStorage.getItem('emi_theme') || 'dark';
+      document.documentElement.setAttribute('data-theme', savedTheme);
+      document.documentElement.style.colorScheme = savedTheme;
+    })();
+  </script>
 </head>
 <body>
 
@@ -98,6 +107,10 @@
           <div class="status-dot shortfall" id="topStatusDot"></div>
           <span id="topStatusText">Checking Risk...</span>
         </div>
+
+        <button class="theme-toggle-btn" id="themeToggleBtn" onclick="app.toggleTheme()" title="Toggle Light / Dark Mode" aria-label="Toggle Theme">
+          <span id="themeToggleIcon">☀️</span>
+        </button>
         
         <button class="btn btn-simulator btn-sm" onclick="app.navigateTo('simulator-view')">
           <span>⚡ Test New EMI</span>
@@ -740,6 +753,17 @@
             <button class="btn btn-danger btn-sm" onclick="app.clearAllData()">
               Clear All Data
             </button>
+          </div>
+
+          <div class="card">
+            <h3 class="card-title" style="margin-bottom: 0.5rem;">🌓 Appearance Theme</h3>
+            <p style="font-size: 0.85rem; margin-bottom: 1rem;">
+              Switch between Obsidian Fintech Dark and Clean Financial Light mode.
+            </p>
+            <select class="form-control" style="width: 160px;" id="themeSelector" onchange="app.setTheme(this.value)">
+              <option value="dark">🌙 Dark Mode</option>
+              <option value="light">☀️ Light Mode</option>
+            </select>
           </div>
 
           <div class="card">

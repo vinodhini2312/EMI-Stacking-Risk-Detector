@@ -10,11 +10,54 @@ const app = {
   currentSimResult: null,
   pendingDeleteId: null,
   currencySymbol: '₹',
+  theme: 'dark',
 
   init() {
+    this.initTheme();
     this.bindEvents();
     this.initDates();
     this.loadAll();
+  },
+
+  initTheme() {
+    const savedTheme = localStorage.getItem('emi_theme') || 'dark';
+    this.setTheme(savedTheme, false);
+  },
+
+  setTheme(theme, save = true) {
+    this.theme = theme;
+    if (save) {
+      localStorage.setItem('emi_theme', theme);
+    }
+    document.documentElement.setAttribute('data-theme', theme);
+    document.documentElement.style.colorScheme = theme;
+
+    const iconElem = document.getElementById('themeToggleIcon');
+    if (iconElem) {
+      iconElem.textContent = theme === 'light' ? '🌙' : '☀️';
+    }
+
+    const themeSelect = document.getElementById('themeSelector');
+    if (themeSelect && themeSelect.value !== theme) {
+      themeSelect.value = theme;
+    }
+
+    // Refresh active charts with updated theme palette if rendered
+    if (this.currentDashboard && this.currentDashboard.weeklyPeriods) {
+      chartEngine.renderDashboardChart('dashboardRiskChart', this.currentDashboard.weeklyPeriods);
+    }
+    if (this.currentSimResult) {
+      chartEngine.renderSimulationComparisonChart('simComparisonChart', this.currentSimResult);
+    }
+    if (this.currentLoans && this.currentLoans.length > 0 && document.getElementById('loanDistributionChart')) {
+      chartEngine.renderLoanDistributionChart('loanDistributionChart', this.currentLoans);
+    }
+  },
+
+  toggleTheme() {
+    const nextTheme = this.theme === 'light' ? 'dark' : 'light';
+    this.setTheme(nextTheme, true);
+    this.showToast(`Switched to ${nextTheme === 'light' ? 'Light' : 'Dark'} mode`, 'info');
   },
 
   bindEvents() {
