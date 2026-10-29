@@ -1,0 +1,44 @@
+# Maven Build Artifacts
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+.mvn/wrapper/maven-wrapper.jar
+
+# Secrets and Environment Variables
+.env
+*.env
+.env.local
+.env.*.local
+
+# Local Embedded Database files
+data/
+*.db
+*.mv.db
+*.trace.db
+
+# IDE and Editor Files
+.idea/
+*.iml
+*.iws
+*.ipr
+.vscode/
+.settings/
+.project
+.classpath
+.factorypath
+bin/
+
+# Logs
+logs/
+*.log
+
+# Operating System files
+.DS_Store
+Thumbs.db
+desktop.ini

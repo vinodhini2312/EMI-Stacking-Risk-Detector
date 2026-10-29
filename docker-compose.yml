@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: emi_stacking_detector_app
+    ports:
+      - "8080:8080"
+    environment:
+      - PORT=8080
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/emiguard_db
+      - SPRING_DATASOURCE_USERNAME=emiguard
+      - SPRING_DATASOURCE_PASSWORD=emiguard_secure_password
+      - SPRING_DATASOURCE_DRIVER=org.postgresql.Driver
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: unless-stopped
+
+  postgres:
+    image: postgres:16-alpine
+    container_name: emi_stacking_detector_db
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_DB=emiguard_db
+      - POSTGRES_USER=emiguard
+      - POSTGRES_PASSWORD=emiguard_secure_password
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U emiguard -d emiguard_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+volumes:
+  pgdata:
